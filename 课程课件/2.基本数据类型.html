@@ -111,6 +111,19 @@ img {
 </tr>
 </tbody>
 </table>
+<hr />
+</div>
+<div class="section level1">
+<h1><font color="red">单个元素</font></h1>
+<pre class="r"><code># 变量相当于数据的名字， 赋值相当于给数据起一个名字，然后能够通过这个名字取到数据
+# 赋值有几种形式
+value1 = 1   # 其他语言用的最多的形式
+value1 &lt;- 1  # R的特色，推荐使用
+1 -&gt; value1  # 右赋值
+
+# 把变量删掉，其实是删掉了数据
+rm(value1)
+# value1      #找不到对象'value1'</code></pre>
 <div class="section level3">
 <h3>逻辑型向量</h3>
 <pre class="r"><code># 逻辑值表示真或者假，只有两个值TRUE和FALSE
@@ -135,17 +148,22 @@ length(logicalValue) # 1
 
 mode(falseLogicalValue)   # &quot;logical&quot;
 length(falseLogicalValue) # 5</code></pre>
-</div>
-<div class="section level3">
-<h3>字符型(字符串型)向量</h3>
+<ol start="2" style="list-style-type: decimal">
+<li><h3>字符型(字符串型)向量</h3></li>
+</ol>
 <pre class="r"><code># 可以在引号内输入中引文，数字 符号
 string1 &lt;- &quot;中国科学院大学_JohnnyLiu8615@gamail.com&quot;
+# 如果需要写入&quot; 则前面加上反斜杠
+string2 &lt;- &quot;  \&quot; &quot;
 # 判断是否是字符型向量
 is.character(string1)  #TRUE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code># 判断是否是向量
 is.vector(string1)  #TRUE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code># 计算字符串的长度
+nchar(string1)      # 32 ***中文算一个字符***</code></pre>
+<pre><code>## [1] 32</code></pre>
 <pre class="r"><code># 把字符串向量中的英文字母变成小写的
 lowString &lt;- tolower(string1)
 lowString</code></pre>
@@ -219,6 +237,83 @@ rawString &lt;- &quot;中国科学院大学&quot;
 rawValue &lt;- charToRaw(rawString)  # 把String转成RAW数据
 rawValue  #e4 b8 ad e5 9b bd e7 a7 91 e5 ad a6 e9 99 a2 e5 a4 a7 e5 ad a6</code></pre>
 <pre><code>##  [1] e4 b8 ad e5 9b bd e7 a7 91 e5 ad a6 e9 99 a2 e5 a4 a7 e5 ad a6</code></pre>
+</div>
+</div>
+<div class="section level1">
+<h1><font color="red">多个元素</font></h1>
+<p>前面都是单个的元素组成的向量，即原子向量。而向量可以是有同类型的多个元素组成 ### 冒号(:) 创建一系列的数字型向量</p>
+<pre class="r"><code># 冒号左右两边两个值,可以是数字型，也可以是可以转换成数值型的字符型和逻辑型
+seq1 &lt;- 2:8      # 2 3 4 5 6 7 8
+seq1 &lt;- &quot;2&quot;:&quot;8&quot;  # 2 3 4 5 6 7 8
+seq1 &lt;- TRUE:FALSE   # 1 0
+seq1 &lt;- 8:2.5   #  8 7 6 5 4 3  可以是小数，但是间隔是1， 可以是大数在前面</code></pre>
+<div id="seq-req" class="section level3">
+<h3>seq(), req()创建一些列的数字型向量</h3>
+<pre class="r"><code># 只能是数字型，有三个参数
+seq2 &lt;- seq(5,8)  #5 6 7 8
+seq2 &lt;- seq(5,8.5, .4)  #第三个参数是步长，默认是1
+
+# 创建重复的数字
+seq3 &lt;- rep(4, 10)  #4 4 4 4 4 4 4 4 4 4</code></pre>
+</div>
+<div id="c" class="section level3">
+<h3>c()创建一些列的同类型的向量</h3>
+<pre class="r"><code># 可以把很多的元素形成一个向量
+vector2 &lt;- c(&quot;Johnny&quot;, &quot;Liu&quot;)   # &quot;Johnny&quot; &quot;Liu&quot; 
+vector2 &lt;- c(TRUE, TRUE)        # TRUE TRUE
+# 只要有字符型向量存在，其他的都编程字符型向量
+vector1 &lt;- c(1, charToRaw(&quot;1&quot;), &quot;1&quot;, TRUE)     #&quot;1&quot;    &quot;31&quot;   &quot;1&quot;    &quot;TRUE&quot;
+vector1 &lt;- c(1, 2, TRUE)  #1 2 1</code></pre>
+</div>
+<div class="section level3">
+<h3>获取向量的元素</h3>
+<pre class="r"><code># 可以通过方括号[]加上向量去获取 eg  【1】取第一个元素
+day &lt;- c(&quot;Sun&quot;,&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thurs&quot;,&quot;Fri&quot;,&quot;Sat&quot;)
+length(day)        # 7</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code>sunday &lt;- day[1]   # 取第一个元素
+friday &lt;- day[6]   # 取第六个元素
+# 同时获取这两个元素  # Accessing vector elements using position.
+day[c(1,6)]           #  &quot;Sun&quot; &quot;Fri&quot;</code></pre>
+<pre><code>## [1] &quot;Sun&quot; &quot;Fri&quot;</code></pre>
+<pre class="r"><code>day[c(TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE)]  # Accessing vector elements using logical indexing.</code></pre>
+<pre><code>## [1] &quot;Sun&quot; &quot;Fri&quot;</code></pre>
+</div>
+<div class="section level3">
+<h3>向量的运算</h3>
+<pre class="r"><code># 数字型向量可以进行加减乘除运算
+# Create two vectors.
+v1 &lt;- c(3,8,4,5,0,11)
+v2 &lt;- c(4,11,0,8,1,2)
+
+# 加法
+add.result &lt;- v1+v2
+# 减法
+sub.result &lt;- v1-v2
+# 乘法
+multi.result &lt;- v1*v2
+# 除法
+divi.result &lt;- v1/v2
+
+# 如果两个向量的元素值不一样，则较短的向量会循环进行操作
+v1 &lt;- c(3,8,4,5,0,11)   
+v2 &lt;- c(4,11)           # 会变成 4, 11, 4, 11, 4, 11
+add.result &lt;- v1+v2</code></pre>
+</div>
+<div class="section level3">
+<h3>向量的排序</h3>
+<pre class="r"><code># 数字型向量和字符型向量可以进行排序 
+# 默认是升序
+v &lt;- c(3,8,4,5,0,11, -9, 304)
+sort.result &lt;- sort(v)   # -9   0   3   4   5   8  11 304
+# 降序处理
+sort.result &lt;- sort(v, decreasing = TRUE)  # 304  11   8   5   4   3   0  -9
+
+# 按字母顺序进行排序
+v &lt;- c(&quot;Red&quot;,&quot;Blue&quot;,&quot;yellow&quot;,&quot;violet&quot;)
+sort.result &lt;- sort(v)
+# 降序处理
+revsort.result &lt;- sort(v, decreasing = TRUE)</code></pre>
 </div>
 </div>
 
